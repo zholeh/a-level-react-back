@@ -1,0 +1,32 @@
+export default [
+  {
+    symbol: '$',
+    name: 'US Dollar',
+    symbol_native: '$',
+    decimal_digits: 2,
+    rounding: 0,
+    id: 'USD',
+    name_plural: 'US dollars',
+    exchange_rate: 1,
+  },
+  {
+    symbol: '€',
+    name: 'Euro',
+    symbol_native: '€',
+    decimal_digits: 2,
+    rounding: 0,
+    id: 'EUR',
+    name_plural: 'euros',
+    exchange_rate: 1.1,
+  },
+  {
+    symbol: '₴',
+    name: 'Ukrainian Hryvnia',
+    symbol_native: '₴',
+    decimal_digits: 2,
+    rounding: 0,
+    id: 'UAH',
+    name_plural: 'Ukrainian hryvnias',
+    exchange_rate: 25,
+  },
+];
