@@ -20,8 +20,8 @@ import {
   ApiUnprocessableEntityResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { Product } from 'src/common/interfaces/product';
-import { ProductService } from 'src/services/product.service';
+import { Product } from '../../common/interfaces/product';
+import { ProductService } from '../../services/product.service';
 import { ErrorType } from '../models/error.model';
 import { ProductFilter } from './models/filter';
 import { ProductModel } from './models/model';

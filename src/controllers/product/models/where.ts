@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Where } from 'src/common/interfaces/where';
+import { Where } from '../../../common/interfaces/where';
 import { Product } from '../../../common/interfaces/product';
 
 export class ProductWhere implements Where<Product> {

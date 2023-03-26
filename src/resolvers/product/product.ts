@@ -8,7 +8,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { ProductService } from 'src/services/product.service';
+import { ProductService } from '../../services/product.service';
 import { ProductInput } from './models/product.input';
 import { ProductModel } from './models/product.model';
 import { PartialUpdateProductInput } from './models/partialUpdate-product.input';
