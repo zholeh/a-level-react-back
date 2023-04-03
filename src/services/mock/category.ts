@@ -1,18 +1,26 @@
 export default [
   {
-    name: 'Shoes',
-    id: '1',
+    name: 'Рубашки',
+    id: 1,
   },
   {
-    name: 'Shirts',
-    id: '2',
+    name: 'Джинсы',
+    id: 2,
   },
   {
-    name: 'Skirts',
-    id: '3',
+    name: 'Шорты',
+    id: 3,
   },
   {
-    name: 'Dresses',
-    id: '4',
+    name: 'Свитер',
+    id: 4,
+  },
+  {
+    name: 'Худи',
+    id: 5,
+  },
+  {
+    name: 'Пальто',
+    id: 6,
   },
 ];

@@ -3,8 +3,8 @@ import { Where } from 'src/common/interfaces/where';
 import { Currency } from '../../../common/interfaces/currency';
 
 export class CurrencyWhere implements Where<Currency> {
-  @ApiProperty({ type: String })
-  readonly id?: string;
+  @ApiProperty({ type: Number })
+  readonly id?: number;
 
   @ApiProperty({ type: String })
   readonly symbol?: string;

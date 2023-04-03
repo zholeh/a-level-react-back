@@ -7,5 +7,5 @@ export class CategoryInput implements Category {
   readonly name!: string;
 
   @Field(() => ID)
-  readonly id!: string;
+  readonly id!: number;
 }

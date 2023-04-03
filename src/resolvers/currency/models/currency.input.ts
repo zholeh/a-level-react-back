@@ -19,7 +19,7 @@ export class CurrencyInput implements Currency {
   readonly rounding!: number;
 
   @Field(() => ID)
-  readonly id!: string;
+  readonly id!: number;
 
   @Field(() => String)
   readonly name_plural!: string;

@@ -4,7 +4,7 @@ export interface Currency {
   symbol_native: string;
   decimal_digits: number;
   rounding: number;
-  id: string;
+  id: number;
   name_plural: string;
   exchange_rate: number;
 }

@@ -3,8 +3,8 @@ import { Where } from 'src/common/interfaces/where';
 import { Category } from '../../../common/interfaces/category';
 
 export class CategoryWhere implements Where<Category> {
-  @ApiProperty({ type: String })
-  readonly id?: string;
+  @ApiProperty({ type: Number })
+  readonly id?: number;
 
   @ApiProperty({ type: String })
   readonly symbol?: string;

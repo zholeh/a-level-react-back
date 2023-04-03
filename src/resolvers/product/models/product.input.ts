@@ -7,5 +7,5 @@ export class ProductInput implements Product {
   readonly name!: string;
 
   @Field(() => ID)
-  readonly id!: string;
+  readonly id!: number;
 }

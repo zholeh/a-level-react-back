@@ -3,5 +3,5 @@ import { ProductModel } from './model';
 
 export class PartialUpdateProduct extends PartialType(ProductModel) {
   @ApiProperty({ type: String, required: true })
-  readonly id!: string;
+  readonly id!: number;
 }

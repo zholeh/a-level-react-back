@@ -4,5 +4,5 @@ import { CategoryInput } from './category.input';
 @InputType()
 export class PartialUpdateCategoryInput extends PartialType(CategoryInput) {
   @Field(() => ID, { nullable: false })
-  readonly id!: string;
+  readonly id!: number;
 }

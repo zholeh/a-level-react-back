@@ -43,7 +43,7 @@ export class CurrencyController {
     description: 'Not found entity error',
     type: ErrorType,
   })
-  findOne(@Param('id') id: string): Promise<Currency | undefined> {
+  findOne(@Param('id') id: number): Promise<Currency | undefined> {
     return this.service.findOne(id);
   }
 
@@ -66,7 +66,7 @@ export class CurrencyController {
       },
     },
   })
-  findAll(@Query() params: CurrencyFilter): Promise<Currency[]> {
+  async findAll(@Query() params: CurrencyFilter): Promise<Currency[]> {
     const where = params.where ? JSON.parse(params.where) : undefined;
     const sort = params.sort ? JSON.parse(params.sort) : undefined;
     return this.service.findAll(where, sort);
@@ -106,7 +106,7 @@ export class CurrencyController {
   @ApiUnprocessableEntityResponse({
     type: ErrorType,
   })
-  async delete(@Param('id') id: string): Promise<boolean> {
+  async delete(@Param('id') id: number): Promise<boolean> {
     return this.service.delete(id);
   }
 }

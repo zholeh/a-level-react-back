@@ -4,7 +4,7 @@ import { Where } from '../common/interfaces/where';
 import { Direction } from '../common/enums/direction';
 
 type ObjectWithId = {
-  id: string;
+  id: number;
 };
 @Injectable()
 export class CrudService<T extends ObjectWithId> {
@@ -14,7 +14,7 @@ export class CrudService<T extends ObjectWithId> {
     this.data = [...data];
   }
 
-  async findOne(id: string): Promise<T> {
+  async findOne(id: number): Promise<T> {
     const index = this.findIndex(id);
 
     if (index < 0)
@@ -25,7 +25,13 @@ export class CrudService<T extends ObjectWithId> {
 
   async findAll(where?: Where<T>, sort?: Sort<T>): Promise<T[]> {
     const filteredData = this.filter(this.data, where);
-    return this.sort(filteredData, sort);
+    const sortedData = this.sort(filteredData, sort);
+
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        resolve(sortedData);
+      }, 1000),
+    );
   }
 
   async create(entity: T) {
@@ -33,7 +39,7 @@ export class CrudService<T extends ObjectWithId> {
     return entity;
   }
 
-  async delete(id: string) {
+  async delete(id: number) {
     const arr = [...this.data];
 
     const index = this.findIndex(id);
@@ -57,7 +63,7 @@ export class CrudService<T extends ObjectWithId> {
     return el;
   }
 
-  async partialUpdate(el: Partial<T> & { id: string }) {
+  async partialUpdate(el: Partial<T> & { id: number }) {
     const index = this.findIndex(el.id);
     if (index < 0)
       throw new UnprocessableEntityException(`Entity with ${el.id} not found`);
@@ -69,7 +75,7 @@ export class CrudService<T extends ObjectWithId> {
     return arr[index];
   }
 
-  private findIndex(id: string) {
+  private findIndex(id: number) {
     return this.data.findIndex((el) => {
       return el.id === id;
     });

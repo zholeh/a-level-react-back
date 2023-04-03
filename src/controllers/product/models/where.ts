@@ -3,8 +3,8 @@ import { Where } from '../../../common/interfaces/where';
 import { Product } from '../../../common/interfaces/product';
 
 export class ProductWhere implements Where<Product> {
-  @ApiProperty({ type: String })
-  readonly id?: string;
+  @ApiProperty({ type: Number })
+  readonly id?: number;
 
   @ApiProperty({ type: String })
   readonly symbol?: string;

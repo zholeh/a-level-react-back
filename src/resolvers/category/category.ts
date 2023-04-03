@@ -42,7 +42,7 @@ export class CategoryQueryResolver {
 
   @ResolveField(() => CategoryModel)
   async findOne(
-    @Args('id', { type: () => ID }) id: string,
+    @Args('id', { type: () => ID }) id: number,
   ): Promise<CategoryModel> {
     return this.service.findOne(id);
   }
@@ -87,7 +87,7 @@ export class CategoryMutationResolver {
   }
 
   @ResolveField(() => Boolean)
-  async delete(@Args('id', { type: () => ID }) id: string): Promise<boolean> {
+  async delete(@Args('id', { type: () => ID }) id: number): Promise<boolean> {
     return this.service.delete(id);
   }
 }

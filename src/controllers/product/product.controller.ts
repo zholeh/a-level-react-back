@@ -43,7 +43,7 @@ export class ProductController {
     description: 'Not found entity error',
     type: ErrorType,
   })
-  findOne(@Param('id') id: string): Promise<Product | undefined> {
+  findOne(@Param('id') id: number): Promise<Product | undefined> {
     return this.service.findOne(id);
   }
 
@@ -106,7 +106,7 @@ export class ProductController {
   @ApiUnprocessableEntityResponse({
     type: ErrorType,
   })
-  async delete(@Param('id') id: string): Promise<boolean> {
+  async delete(@Param('id') id: number): Promise<boolean> {
     return this.service.delete(id);
   }
 }
