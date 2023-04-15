@@ -20,33 +20,33 @@ import {
   ApiUnprocessableEntityResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { Currency } from 'src/common/interfaces/currency';
-import { CurrencyService } from 'src/services/currency.service';
+import { Order } from 'src/common/interfaces/order';
+import { OrderService } from '../../services/order.service';
 import { ErrorType } from '../models/error.model';
-import { CurrencyFilter } from './models/filter';
-import { CurrencyModel } from './models/model';
-import { PartialUpdateCurrency } from './models/partial';
-import { CurrencySort } from './models/sort';
-import { CurrencyWhere } from './models/where';
-import { Pagination } from '../common/models/pagination';
+import { OrderFilter } from './models/filter';
+import { OrderModel } from './models/model';
+import { PartialUpdateOrder } from './models/partial';
+import { OrderSort } from './models/sort';
+import { OrderWhere } from './models/where';
 import { List } from 'src/common/interfaces/list';
+import { Pagination } from '../common/models/pagination';
 
-@Controller('currency')
-@ApiExtraModels(CurrencyWhere)
-@ApiExtraModels(CurrencySort)
+@Controller('order')
+@ApiExtraModels(OrderWhere)
+@ApiExtraModels(OrderSort)
 @ApiExtraModels(Pagination)
-@ApiTags('Currency')
-export class CurrencyController {
-  constructor(private readonly service: CurrencyService) {}
+@ApiTags('Order')
+export class OrderController {
+  constructor(private readonly service: OrderService) {}
 
   @Get('/:id')
   @ApiParam({ name: 'id', type: 'string' })
-  @ApiOkResponse({ type: CurrencyModel })
+  @ApiOkResponse({ type: OrderModel })
   @ApiNotFoundResponse({
     description: 'Not found entity error',
     type: ErrorType,
   })
-  findOne(@Param('id') id: number): Promise<Currency | undefined> {
+  findOne(@Param('id') id: number): Promise<Order | undefined> {
     return this.service.findOne(id);
   }
 
@@ -56,7 +56,7 @@ export class CurrencyController {
     required: false,
     content: {
       'application/json': {
-        schema: { $ref: getSchemaPath(CurrencyWhere) },
+        schema: { $ref: getSchemaPath(OrderWhere) },
       },
     },
   })
@@ -65,7 +65,7 @@ export class CurrencyController {
     required: false,
     content: {
       'application/json': {
-        schema: { $ref: getSchemaPath(CurrencySort) },
+        schema: { $ref: getSchemaPath(OrderSort) },
       },
     },
   })
@@ -78,7 +78,7 @@ export class CurrencyController {
       },
     },
   })
-  async findAll(@Query() params: CurrencyFilter): Promise<List<Currency>> {
+  async findAll(@Query() params: OrderFilter): Promise<List<Order>> {
     const where = params.where ? JSON.parse(params.where) : undefined;
     const sort = params.sort ? JSON.parse(params.sort) : undefined;
     const pagination = params.pagination
@@ -88,31 +88,29 @@ export class CurrencyController {
   }
 
   @Post('')
-  @ApiCreatedResponse({ type: CurrencyModel })
+  @ApiCreatedResponse({ type: OrderModel })
   @ApiUnprocessableEntityResponse({
     type: ErrorType,
   })
-  async create(@Body() input: CurrencyModel): Promise<CurrencyModel> {
+  async create(@Body() input: OrderModel): Promise<OrderModel> {
     return this.service.create(input);
   }
 
   @Put('')
-  @ApiOkResponse({ type: CurrencyModel })
+  @ApiOkResponse({ type: OrderModel })
   @ApiUnprocessableEntityResponse({
     type: ErrorType,
   })
-  async update(@Body() input: CurrencyModel): Promise<CurrencyModel> {
+  async update(@Body() input: OrderModel): Promise<OrderModel> {
     return this.service.update({ ...input });
   }
 
   @Patch('')
-  @ApiOkResponse({ type: CurrencyModel })
+  @ApiOkResponse({ type: OrderModel })
   @ApiUnprocessableEntityResponse({
     type: ErrorType,
   })
-  async partialUpdate(
-    @Body() input: PartialUpdateCurrency,
-  ): Promise<CurrencyModel> {
+  async partialUpdate(@Body() input: PartialUpdateOrder): Promise<OrderModel> {
     return this.service.partialUpdate({ ...input });
   }
 

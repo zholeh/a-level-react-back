@@ -10,15 +10,17 @@ import {
 } from '@nestjs/graphql';
 import { CurrencyService } from 'src/services/currency.service';
 import { CurrencyInput } from './models/currency.input';
-import { CurrencyModel } from './models/currency.model';
+import { CurrencyListModel, CurrencyModel } from './models/currency.model';
 import { PartialUpdateCurrencyInput } from './models/partialUpdate-currency.input';
 import { CurrencySort } from './models/sort';
 import { CurrencyWhere } from './models/where';
+import { PaginationInput } from '../common/pagination.input';
+import { List } from 'src/common/interfaces/list';
 
 @ObjectType()
 export class CurrencyQuery {
-  @Field(() => [CurrencyModel], { nullable: true })
-  readonly findAll!: CurrencyModel[];
+  @Field(() => CurrencyListModel, { nullable: true })
+  readonly findAll!: CurrencyListModel;
   @Field(() => CurrencyModel, { nullable: true })
   readonly findOne!: CurrencyModel;
 }
@@ -32,12 +34,13 @@ export class CurrencyQueryResolver {
     return true;
   }
 
-  @ResolveField(() => [CurrencyModel])
+  @ResolveField(() => [CurrencyListModel])
   async findAll(
     @Args('where', { nullable: true }) where?: CurrencyWhere,
     @Args('sort', { nullable: true }) sort?: CurrencySort,
-  ): Promise<CurrencyModel[]> {
-    return this.service.findAll(where, sort);
+    @Args('pagination', { nullable: true }) pagination?: PaginationInput,
+  ): Promise<List<CurrencyModel>> {
+    return this.service.findAll(where, sort, pagination);
   }
 
   @ResolveField(() => CurrencyModel)

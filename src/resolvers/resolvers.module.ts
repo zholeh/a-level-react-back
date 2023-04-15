@@ -15,6 +15,7 @@ import {
   ProductMutationResolver,
   ProductQueryResolver,
 } from './product/product';
+import { OrderMutationResolver, OrderQueryResolver } from './order/order';
 
 @Module({
   imports: [
@@ -26,6 +27,8 @@ import {
     ServicesModule,
   ],
   providers: [
+    OrderQueryResolver,
+    OrderMutationResolver,
     CurrencyQueryResolver,
     CurrencyMutationResolver,
     CategoryQueryResolver,

@@ -10,15 +10,17 @@ import {
 } from '@nestjs/graphql';
 import { ProductService } from '../../services/product.service';
 import { ProductInput } from './models/product.input';
-import { ProductModel } from './models/product.model';
+import { ProductListModel, ProductModel } from './models/product.model';
 import { PartialUpdateProductInput } from './models/partialUpdate-product.input';
 import { ProductSort } from './models/sort';
 import { ProductWhere } from './models/where';
+import { PaginationInput } from '../common/pagination.input';
+import { List } from 'src/common/interfaces/list';
 
 @ObjectType()
 export class ProductQuery {
-  @Field(() => [ProductModel], { nullable: true })
-  readonly findAll!: ProductModel[];
+  @Field(() => ProductListModel, { nullable: true })
+  readonly findAll!: ProductListModel;
   @Field(() => ProductModel, { nullable: true })
   readonly findOne!: ProductModel;
 }
@@ -32,12 +34,13 @@ export class ProductQueryResolver {
     return true;
   }
 
-  @ResolveField(() => [ProductModel])
+  @ResolveField(() => ProductListModel)
   async findAll(
     @Args('where', { nullable: true }) where?: ProductWhere,
     @Args('sort', { nullable: true }) sort?: ProductSort,
-  ): Promise<ProductModel[]> {
-    return this.service.findAll(where, sort);
+    @Args('pagination', { nullable: true }) pagination?: PaginationInput,
+  ): Promise<List<ProductModel>> {
+    return this.service.findAll(where, sort, pagination);
   }
 
   @ResolveField(() => ProductModel)

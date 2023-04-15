@@ -1,5 +1,6 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Currency } from '../../../common/interfaces/currency';
+import { List } from 'src/common/interfaces/list';
 
 @ObjectType()
 export class CurrencyModel implements Currency {
@@ -26,4 +27,13 @@ export class CurrencyModel implements Currency {
 
   @Field(() => Number)
   readonly exchange_rate!: number;
+}
+
+@ObjectType()
+export class CurrencyListModel implements List<Currency> {
+  @Field(() => [CurrencyModel])
+  readonly items!: CurrencyModel[];
+
+  @Field(() => Int)
+  readonly totalCount!: number;
 }

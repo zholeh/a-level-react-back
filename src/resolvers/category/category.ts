@@ -10,15 +10,17 @@ import {
 } from '@nestjs/graphql';
 import { CategoryService } from 'src/services/category.service';
 import { CategoryInput } from './models/category.input';
-import { CategoryModel } from './models/category.model';
+import { CategoryListModel, CategoryModel } from './models/category.model';
 import { PartialUpdateCategoryInput } from './models/partialUpdate-category.input';
 import { CategorySort } from './models/sort';
 import { CategoryWhere } from './models/where';
+import { List } from 'src/common/interfaces/list';
+import { PaginationInput } from '../common/pagination.input';
 
 @ObjectType()
 export class CategoryQuery {
-  @Field(() => [CategoryModel], { nullable: true })
-  readonly findAll!: CategoryModel[];
+  @Field(() => CategoryListModel, { nullable: true })
+  readonly findAll!: CategoryListModel;
   @Field(() => CategoryModel, { nullable: true })
   readonly findOne!: CategoryModel;
 }
@@ -32,12 +34,13 @@ export class CategoryQueryResolver {
     return true;
   }
 
-  @ResolveField(() => [CategoryModel])
+  @ResolveField(() => CategoryListModel)
   async findAll(
     @Args('where', { nullable: true }) where?: CategoryWhere,
     @Args('sort', { nullable: true }) sort?: CategorySort,
-  ): Promise<CategoryModel[]> {
-    return this.service.findAll(where, sort);
+    @Args('pagination', { nullable: true }) pagination?: PaginationInput,
+  ): Promise<List<CategoryModel>> {
+    return this.service.findAll(where, sort, pagination);
   }
 
   @ResolveField(() => CategoryModel)

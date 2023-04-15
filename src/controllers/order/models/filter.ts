@@ -1,4 +1,4 @@
-export class ProductFilter {
+export class OrderFilter {
   readonly where?: string;
 
   readonly sort?: string;

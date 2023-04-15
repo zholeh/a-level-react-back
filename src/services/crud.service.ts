@@ -2,6 +2,8 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { Sort } from '../common/interfaces/sort';
 import { Where } from '../common/interfaces/where';
 import { Direction } from '../common/enums/direction';
+import { List } from 'src/common/interfaces/list';
+import { Pagination } from 'src/common/interfaces/pagination';
 
 type ObjectWithId = {
   id: number;
@@ -23,13 +25,25 @@ export class CrudService<T extends ObjectWithId> {
     return this.data[index];
   }
 
-  async findAll(where?: Where<T>, sort?: Sort<T>): Promise<T[]> {
-    const filteredData = this.filter(this.data, where);
+  async findAll(
+    where?: Where<T>,
+    sort?: Sort<T>,
+    pagination?: Pagination,
+  ): Promise<List<T>> {
+    let paginatedData = this.data;
+    if (pagination) {
+      const indexSkip = pagination.skip - 1;
+      const indexTake = pagination.skip + pagination.take - 1;
+      paginatedData = this.data.filter((el, index) => {
+        return index > indexSkip && index <= indexTake;
+      });
+    }
+    const filteredData = this.filter(paginatedData, where);
     const sortedData = this.sort(filteredData, sort);
 
     return new Promise((resolve) =>
       setTimeout(() => {
-        resolve(sortedData);
+        resolve({ items: sortedData, totalCount: this.data.length });
       }, 1000),
     );
   }

@@ -28,10 +28,13 @@ import { CategoryModel } from './models/model';
 import { PartialUpdateCategory } from './models/partial';
 import { CategorySort } from './models/sort';
 import { CategoryWhere } from './models/where';
+import { List } from 'src/common/interfaces/list';
+import { Pagination } from '../common/models/pagination';
 
 @Controller('category')
 @ApiExtraModels(CategoryWhere)
 @ApiExtraModels(CategorySort)
+@ApiExtraModels(Pagination)
 @ApiTags('Category')
 export class CategoryController {
   constructor(private readonly service: CategoryService) {}
@@ -66,10 +69,22 @@ export class CategoryController {
       },
     },
   })
-  findAll(@Query() params: CategoryFilter): Promise<Category[]> {
+  @ApiQuery({
+    name: 'pagination',
+    required: false,
+    content: {
+      'application/json': {
+        schema: { $ref: getSchemaPath(Pagination) },
+      },
+    },
+  })
+  async findAll(@Query() params: CategoryFilter): Promise<List<Category>> {
     const where = params.where ? JSON.parse(params.where) : undefined;
     const sort = params.sort ? JSON.parse(params.sort) : undefined;
-    return this.service.findAll(where, sort);
+    const pagination = params.pagination
+      ? (JSON.parse(params.pagination) as Pagination)
+      : undefined;
+    return this.service.findAll(where, sort, pagination);
   }
 
   @Post('')

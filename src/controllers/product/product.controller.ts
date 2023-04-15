@@ -28,10 +28,13 @@ import { ProductModel } from './models/model';
 import { PartialUpdateProduct } from './models/partial';
 import { ProductSort } from './models/sort';
 import { ProductWhere } from './models/where';
+import { Pagination } from '../common/models/pagination';
+import { List } from 'src/common/interfaces/list';
 
 @Controller('product')
 @ApiExtraModels(ProductWhere)
 @ApiExtraModels(ProductSort)
+@ApiExtraModels(Pagination)
 @ApiTags('Product')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
@@ -66,10 +69,22 @@ export class ProductController {
       },
     },
   })
-  findAll(@Query() params: ProductFilter): Promise<Product[]> {
+  @ApiQuery({
+    name: 'pagination',
+    required: false,
+    content: {
+      'application/json': {
+        schema: { $ref: getSchemaPath(Pagination) },
+      },
+    },
+  })
+  findAll(@Query() params: ProductFilter): Promise<List<Product>> {
     const where = params.where ? JSON.parse(params.where) : undefined;
     const sort = params.sort ? JSON.parse(params.sort) : undefined;
-    return this.service.findAll(where, sort);
+    const pagination = params.pagination
+      ? JSON.parse(params.pagination)
+      : undefined;
+    return this.service.findAll(where, sort, pagination);
   }
 
   @Post('')
